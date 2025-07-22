@@ -1,4 +1,4 @@
-package com.example.doubtsnotebook.data.local
+package com.example.doubtsnotebook.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
