@@ -11,8 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.doubtsnotebook.presentation.customers.CustomerListScreen
+import com.example.doubtsnotebook.presentation.customers.addcustomer.AddCustomerScreen
 import com.example.doubtsnotebook.ui.theme.DoubtsNotebookTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -21,29 +27,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DoubtsNotebookTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+                NavHost(navController = navController, startDestination = CustomerList) {
+                    composable<CustomerList> {
+                        CustomerListScreen(onAddCustomerClick = { navController.navigate(AddCustomer) })
+                    }
+                    composable<AddCustomer> { AddCustomerScreen(onBack = { navController.popBackStack() }) }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+@Serializable
+object CustomerList
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DoubtsNotebookTheme {
-        Greeting("Android")
-    }
-}
+@Serializable
+object AddCustomer

@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -21,22 +25,33 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddCustomerScreen(viewModel: AddCustomerViewModel = viewModel()) {
+fun AddCustomerScreen(
+    viewModel: AddCustomerViewModel = hiltViewModel(),
+    onBack: () -> Unit
+) {
     val state by viewModel.state.collectAsState()
 
     LaunchedEffect(state.isSaved) {
         if (state.isSaved){
+            onBack()
             viewModel.onEvent(AddCustomerEvent.OnSaveHandled)
         }
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Add Customer") })
+            TopAppBar(
+                title = { Text("Add Customer") },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            )
         }
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding).padding(16.dp)) {
