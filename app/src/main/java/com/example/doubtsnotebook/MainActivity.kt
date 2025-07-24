@@ -7,8 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.doubtsnotebook.presentation.customers.CustomerListScreen
+import androidx.navigation.toRoute
+import com.example.doubtsnotebook.presentation.customers.customerList.CustomerListScreen
 import com.example.doubtsnotebook.presentation.customers.addcustomer.AddCustomerScreen
+import com.example.doubtsnotebook.presentation.customers.addtransaction.AddTransactionScreen
+import com.example.doubtsnotebook.presentation.customers.customerdetails.CustomerDetailsScreen
 import com.example.doubtsnotebook.ui.theme.DoubtsNotebookTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
@@ -23,9 +26,20 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = CustomerList) {
                     composable<CustomerList> {
-                        CustomerListScreen(onAddCustomerClick = { navController.navigate(AddCustomer) })
+                        CustomerListScreen(
+                            onAddCustomerClick = { navController.navigate(AddCustomer) },
+                            onCustomerClick = { navController.navigate(CustomerDetails(it)) }
+                        )
                     }
                     composable<AddCustomer> { AddCustomerScreen(onBack = { navController.popBackStack() }) }
+                    composable<CustomerDetails>(
+                        typeMap = mapOf()
+                    ) { backStackEntry ->
+                        CustomerDetailsScreen(
+                            customerId = backStackEntry.toRoute<CustomerDetails>().customerId,
+                            onAddTransactionClick = { navController.navigate(AddTransaction(it)) })
+                    }
+                    composable<AddTransaction> { AddTransactionScreen(onBack = { navController.popBackStack() }) }
                 }
             }
         }
@@ -37,3 +51,9 @@ object CustomerList
 
 @Serializable
 object AddCustomer
+
+@Serializable
+data class CustomerDetails(val customerId: Int)
+
+@Serializable
+data class AddTransaction(val customerId: Int)
