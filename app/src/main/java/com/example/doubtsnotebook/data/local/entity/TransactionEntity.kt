@@ -2,7 +2,7 @@ package com.example.doubtsnotebook.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.Companion.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -12,9 +12,10 @@ import androidx.room.PrimaryKey
             entity = CustomerEntity::class,
             parentColumns = ["id"],
             childColumns = ["customerId"],
-            onDelete = CASCADE,
+            onDelete = ForeignKey.CASCADE,
         )
-    ]
+    ],
+    indices = [Index(value = ["customerId"])]
 )
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
