@@ -1,8 +1,6 @@
 package com.example.doubtsnotebook.presentation.customers.customerList
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,12 +9,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,8 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.doubtsnotebook.R
 import com.example.doubtsnotebook.presentation.customers.CustomerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,10 +41,10 @@ fun CustomerListScreen(
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("notebook") }) },
+        topBar = { TopAppBar(title = { Text(stringResource(R.string.customers)) }) },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddCustomerClick) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "add Customer")
+                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add_customer))
             }
         }
     ) { padding ->
@@ -58,7 +55,7 @@ fun CustomerListScreen(
                     .padding(padding),
                 contentAlignment = Alignment.Center
             ) {
-                Text("No Customers Found")
+                Text(stringResource(R.string.no_customers))
             }
         } else {
             LazyColumn(
@@ -73,7 +70,7 @@ fun CustomerListScreen(
                         onValueChange = { searchQuery = it },
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
                         placeholder = {
-                            Text("Search")
+                            Text(stringResource(R.string.search))
                         },
                         shape = RoundedCornerShape(16.dp)
                         )

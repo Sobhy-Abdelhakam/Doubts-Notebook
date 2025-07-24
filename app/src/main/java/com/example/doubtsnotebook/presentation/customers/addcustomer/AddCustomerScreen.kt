@@ -23,9 +23,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.doubtsnotebook.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,10 +47,10 @@ fun AddCustomerScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Add Customer") },
+                title = { Text(stringResource(R.string.add_customer)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -58,12 +60,12 @@ fun AddCustomerScreen(
             OutlinedTextField(
                 value = state.name,
                 onValueChange = { viewModel.onEvent(AddCustomerEvent.OnNameChange(it)) },
-                label = { Text("الاسم *") },
+                label = { Text(stringResource(R.string.name)) },
                 isError = state.isNameError,
                 modifier = Modifier.fillMaxWidth()
             )
             if (state.isNameError) {
-                Text("الاسم مطلوب", color = MaterialTheme.colorScheme.error)
+                Text(stringResource(R.string.name_required), color = MaterialTheme.colorScheme.error)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -71,7 +73,7 @@ fun AddCustomerScreen(
             OutlinedTextField(
                 value = state.phone,
                 onValueChange = { viewModel.onEvent(AddCustomerEvent.OnPhoneChange(it)) },
-                label = { Text("الهاتف") },
+                label = { Text(stringResource(R.string.phone)) },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
@@ -81,7 +83,7 @@ fun AddCustomerScreen(
             OutlinedTextField(
                 value = state.notes,
                 onValueChange = { viewModel.onEvent(AddCustomerEvent.OnNotesChange(it)) },
-                label = { Text("ملاحظات") },
+                label = { Text(stringResource(R.string.notes)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(120.dp)
@@ -93,7 +95,7 @@ fun AddCustomerScreen(
                 onClick = { viewModel.onEvent(AddCustomerEvent.OnSaveClicked) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("حفظ")
+                Text(stringResource(R.string.save))
             }
         }
     }

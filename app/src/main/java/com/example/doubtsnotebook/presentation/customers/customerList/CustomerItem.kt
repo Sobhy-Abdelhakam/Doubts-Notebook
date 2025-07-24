@@ -30,12 +30,9 @@ fun CustomerItem(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(customer.name, style = MaterialTheme.typography.titleMedium)
-            customer.phone?.let { phone ->
-                Text(phone)
-            }
-            customer.notes?.let { note ->
-                Text(note)
-            }
+//            customer.notes?.let { note ->
+//                Text(note)
+//            }
         }
     }
 }

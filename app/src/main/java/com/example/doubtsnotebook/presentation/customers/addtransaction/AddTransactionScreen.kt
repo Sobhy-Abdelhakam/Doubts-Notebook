@@ -26,9 +26,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.doubtsnotebook.R
 import com.example.doubtsnotebook.domain.model.TransactionType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,10 +51,10 @@ fun AddTransactionScreen(
     Scaffold (
         topBar = {
             TopAppBar(
-                title = { Text("Add Transaction") },
+                title = { Text(stringResource(R.string.add_transaction)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 }
             )
@@ -69,14 +71,14 @@ fun AddTransactionScreen(
                     onClick = {
                         viewModel.onEvent(AddTransactionEvent.OnTypeChanged(TransactionType.PURCHASE))
                     },
-                    label = { Text("Purchase") }
+                    label = { Text(stringResource(R.string.purchase)) }
                 )
                 FilterChip(
                     selected = state.type == TransactionType.PAYMENT,
                     onClick = {
                         viewModel.onEvent(AddTransactionEvent.OnTypeChanged(TransactionType.PAYMENT))
                     },
-                    label = { Text("Payment") }
+                    label = { Text(stringResource(R.string.payment)) }
                 )
             }
             Spacer(modifier = Modifier.height(12.dp))
@@ -84,13 +86,13 @@ fun AddTransactionScreen(
             OutlinedTextField(
                 value = state.amount,
                 onValueChange = { viewModel.onEvent(AddTransactionEvent.OnAmountChanged(it)) },
-                label = { Text("amount") },
+                label = { Text(stringResource(R.string.amount)) },
                 isError = state.isAmountError,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
             if (state.isAmountError) {
-                Text("Enter Correct amount", color = MaterialTheme.colorScheme.error)
+                Text(stringResource(R.string.amount_error), color = MaterialTheme.colorScheme.error)
             }
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -98,7 +100,7 @@ fun AddTransactionScreen(
             OutlinedTextField(
                 value = state.description,
                 onValueChange = { viewModel.onEvent(AddTransactionEvent.OnDescriptionChanged(it)) },
-                label = { Text("Description") },
+                label = { Text(stringResource(R.string.note)) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(100.dp)
@@ -110,7 +112,7 @@ fun AddTransactionScreen(
                 onClick = { viewModel.onEvent(AddTransactionEvent.OnSaveClicked) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Save Transaction")
+                Text(stringResource(R.string.save))
             }
         }
     }

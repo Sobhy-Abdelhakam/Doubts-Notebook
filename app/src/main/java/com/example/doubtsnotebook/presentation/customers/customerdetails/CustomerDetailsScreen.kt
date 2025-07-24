@@ -23,7 +23,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.doubtsnotebook.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -51,7 +53,7 @@ fun CustomerDetailsScreen(
                     }) {
                         Icon(
                             Icons.Outlined.Delete,
-                            contentDescription = "Delete Customer",
+                            contentDescription = stringResource(R.string.delete_customer),
                             tint = MaterialTheme.colorScheme.error
                         )
                     }
@@ -60,7 +62,7 @@ fun CustomerDetailsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { onAddTransactionClick(customerId) }) {
-                Icon(Icons.Default.Add, contentDescription = "Add Transaction")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_transaction))
             }
         }
     ) { padding ->
@@ -70,13 +72,13 @@ fun CustomerDetailsScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            Text("Total amount: $balance", style = MaterialTheme.typography.titleLarge)
+            Text("${stringResource(R.string.balance)}: $balance", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Transactions: ", style = MaterialTheme.typography.titleMedium)
+            Text("${stringResource(R.string.transactions)}: ", style = MaterialTheme.typography.titleMedium)
 
             if (transaction.isEmpty()) {
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("No Transactions Found")
+                Text(stringResource(R.string.no_transactions))
             } else {
                 LazyColumn {
                     items(transaction, key = { it.id }) { txn ->

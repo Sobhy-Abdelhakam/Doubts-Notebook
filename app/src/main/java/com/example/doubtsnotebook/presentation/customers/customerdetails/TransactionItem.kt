@@ -13,7 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.example.doubtsnotebook.R
 import com.example.doubtsnotebook.domain.model.Transaction
 import com.example.doubtsnotebook.domain.model.TransactionType.*
 
@@ -23,8 +25,8 @@ fun TransactionItem(
     modifier: Modifier = Modifier
 ) {
     val typeText = when(txn.type){
-        PURCHASE -> "Purchase"
-        PAYMENT -> "Payment"
+        PURCHASE -> stringResource(R.string.purchase)
+        PAYMENT -> stringResource(R.string.payment)
     }
     val amountColor = if (txn.type == PURCHASE) Color.Red else Color.Green
 
