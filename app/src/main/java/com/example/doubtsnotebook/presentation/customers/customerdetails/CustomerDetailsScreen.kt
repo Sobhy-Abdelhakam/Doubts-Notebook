@@ -9,9 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,14 +30,33 @@ import androidx.compose.ui.unit.dp
 fun CustomerDetailsScreen(
     viewModel: CustomerDetailsViewModel = hiltViewModel(),
     customerId: Int,
-    onAddTransactionClick: (Int) -> Unit
+    onAddTransactionClick: (Int) -> Unit,
+    onBack: () -> Unit
 ) {
+    val customer by viewModel.customer.collectAsState()
     val transaction by viewModel.transactions.collectAsState()
     val balance by viewModel.balance.collectAsState()
 
     Scaffold(
         topBar = {
-            TopAppBar(title = {Text("Customer Details")})
+            TopAppBar(
+                title = { Text(customer?.name ?: "") },
+                actions = {
+                    IconButton(onClick = {
+                        customer?.let { c ->
+                            viewModel.deleteCustomer(c)
+                            onBack()
+                        }
+
+                    }) {
+                        Icon(
+                            Icons.Outlined.Delete,
+                            contentDescription = "Delete Customer",
+                            tint = MaterialTheme.colorScheme.error
+                        )
+                    }
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { onAddTransactionClick(customerId) }) {
@@ -43,20 +64,22 @@ fun CustomerDetailsScreen(
             }
         }
     ) { padding ->
-        Column(modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-            .padding(16.dp)) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(16.dp)
+        ) {
             Text("Total amount: $balance", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.height(16.dp))
             Text("Transactions: ", style = MaterialTheme.typography.titleMedium)
 
-            if (transaction.isEmpty()){
+            if (transaction.isEmpty()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text("No Transactions Found")
             } else {
                 LazyColumn {
-                    items(transaction, key = {it.id}) { txn ->
+                    items(transaction, key = { it.id }) { txn ->
                         TransactionItem(txn)
                     }
                 }

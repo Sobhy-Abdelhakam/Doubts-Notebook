@@ -37,7 +37,9 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         CustomerDetailsScreen(
                             customerId = backStackEntry.toRoute<CustomerDetails>().customerId,
-                            onAddTransactionClick = { navController.navigate(AddTransaction(it)) })
+                            onAddTransactionClick = { navController.navigate(AddTransaction(it)) },
+                            onBack = {navController.popBackStack()}
+                        )
                     }
                     composable<AddTransaction> { AddTransactionScreen(onBack = { navController.popBackStack() }) }
                 }
