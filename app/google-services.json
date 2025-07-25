@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "331231519199",
+    "project_id": "on-the-tab-cbc1d",
+    "storage_bucket": "on-the-tab-cbc1d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331231519199:android:5dba1236a2475f2eeca46a",
+        "android_client_info": {
+          "package_name": "com.example.doubtsnotebook"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFtuDxnYiND6chpYH7oVHmoeAvkplAD4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
