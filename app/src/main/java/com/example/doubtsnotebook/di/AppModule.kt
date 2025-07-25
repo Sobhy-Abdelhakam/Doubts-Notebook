@@ -5,8 +5,10 @@ import androidx.room.Room
 import com.example.doubtsnotebook.data.local.AppDatabase
 import com.example.doubtsnotebook.data.local.dao.CustomerDao
 import com.example.doubtsnotebook.data.local.dao.TransactionDao
+import com.example.doubtsnotebook.data.repository.AuthRepositoryImpl
 import com.example.doubtsnotebook.data.repository.CustomerRepositoryImpl
 import com.example.doubtsnotebook.data.repository.TransactionRepositoryImpl
+import com.example.doubtsnotebook.domain.repository.AuthRepository
 import com.example.doubtsnotebook.domain.repository.CustomerRepository
 import com.example.doubtsnotebook.domain.repository.TransactionRepository
 import dagger.Module
@@ -38,4 +40,7 @@ object AppModule {
     @Provides
     fun provideTransactionRepo(dao: TransactionDao): TransactionRepository =
         TransactionRepositoryImpl(dao)
+
+    @Provides
+    fun provideAuthRepo(): AuthRepository = AuthRepositoryImpl()
 }
