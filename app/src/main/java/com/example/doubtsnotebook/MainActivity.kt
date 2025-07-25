@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<CustomerList> {
                         CustomerListScreen(
+                            authViewModel = viewModel,
                             onAddCustomerClick = { navController.navigate(AddCustomer) },
                             onCustomerClick = { navController.navigate(CustomerDetails(it)) }
                         )
