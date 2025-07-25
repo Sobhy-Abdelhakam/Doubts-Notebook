@@ -16,6 +16,10 @@ class FirebaseTransactionDataSource(private val firestore: FirebaseFirestore) {
         return doc.id
     }
 
+    suspend fun updateTransaction(remoteId: String, transaction: TransactionEntity) {
+        transactionsCollection.document(remoteId).set(transaction.toMap()).await()
+    }
+
     suspend fun fetchAllTransactions(): List<Pair<String, TransactionEntity>> {
         return transactionsCollection.get().await().documents.mapNotNull { doc ->
             val data = doc.toObject(TransactionEntity::class.java)?.copy(
