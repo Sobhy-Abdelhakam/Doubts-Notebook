@@ -96,9 +96,9 @@ fun AuthScreen(
             Button(
                 onClick = {
                     if (selectedTab == 0) {
-                        viewModel.login(email, password)
+                        viewModel.login(email.trim(), password.trim())
                     } else {
-                        viewModel.register(email, password)
+                        viewModel.register(email.trim(), password.trim())
                     }
                 },
                 modifier = Modifier.fillMaxWidth()

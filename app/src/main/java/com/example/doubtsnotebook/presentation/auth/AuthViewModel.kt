@@ -23,9 +23,10 @@ class AuthViewModel @Inject constructor(private val authRepository: AuthReposito
     fun register(email: String, password: String) {
         viewModelScope.launch {
             authState = AuthState.Loading
-            authState = when (authRepository.register(email, password).isSuccess) {
-                true -> AuthState.Success
-                false -> AuthState.Error("Registration failed")
+            authRepository.register(email, password).onSuccess {
+                authState = AuthState.Success
+            }.onFailure { e ->
+                authState = AuthState.Error(e.message ?: "Registration failed")
             }
         }
     }
@@ -33,9 +34,10 @@ class AuthViewModel @Inject constructor(private val authRepository: AuthReposito
     fun login(email: String, password: String) {
         viewModelScope.launch {
             authState = AuthState.Loading
-            authState = when (authRepository.login(email, password).isSuccess) {
-                true -> AuthState.Success
-                false -> AuthState.Error("Login failed")
+            authRepository.login(email, password).onSuccess {
+                authState = AuthState.Success
+            }.onFailure { e ->
+                authState = AuthState.Error(e.message ?: "Login failed")
             }
         }
     }
