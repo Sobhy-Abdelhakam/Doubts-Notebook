@@ -2,6 +2,13 @@
 <resources>
     <string name="app_name">السوبر ماركت</string>
 
+    <!-- Authentication-->
+    <string name="login">تسجيل دخول</string>
+    <string name="register">تسجيل</string>
+    <string name="email">إيميل</string>
+    <string name="password">رقم سري</string>
+    <string name="logout">تسجيل خروج</string>
+
     <!-- Customers -->
     <string name="customers">الزبائن</string>
     <string name="no_customers">لا يوجد زبائن</string>

@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Doubts Notebook</string>
 
+    <!-- Authentication-->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="logout">Logout</string>
+
     <!-- Customers -->
     <string name="customers">Customers</string>
     <string name="no_customers">No Customers</string>
