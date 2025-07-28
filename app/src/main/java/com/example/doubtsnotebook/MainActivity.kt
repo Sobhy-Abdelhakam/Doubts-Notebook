@@ -1,10 +1,8 @@
 package com.example.doubtsnotebook
 
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
@@ -16,8 +14,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.example.doubtsnotebook.domain.model.AppLanguage
 import com.example.doubtsnotebook.domain.model.AppTheme
 import com.example.doubtsnotebook.presentation.auth.AuthScreen
@@ -27,21 +23,14 @@ import com.example.doubtsnotebook.presentation.customers.addtransaction.AddTrans
 import com.example.doubtsnotebook.presentation.customers.customerList.CustomerListScreen
 import com.example.doubtsnotebook.presentation.customers.customerdetails.CustomerDetailsScreen
 import com.example.doubtsnotebook.presentation.setting.SettingScreen
-import com.example.doubtsnotebook.sync.SyncWorker
 import com.example.doubtsnotebook.ui.theme.DoubtsNotebookTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            setupSyncWorker()
-//        }
-
-
         enableEdgeToEdge()
         setContent {
             DoubtsNotebookTheme {
@@ -99,7 +88,7 @@ class MainActivity : AppCompatActivity() {
                             logout = {
                                 viewModel.logout()
                                 navController.navigate(Auth) {
-                                    popUpTo(Setting) { inclusive = true }
+                                    popUpTo(0) { inclusive = true }
                                 }
                             }
                         )
@@ -107,30 +96,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setupSyncWorker() {
-//        val now = LocalDateTime.now()
-//        val targetTime = now.withHour(2).withMinute(0).withSecond(0)
-//
-//        val delay = Duration.between(now, targetTime)
-//            .takeIf { !it.isNegative }
-//            ?: Duration.between(now, targetTime.plusDays(1)) // If now after 2:00 AM
-//
-//        val syncWorkerRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
-//            .setInitialDelay(delay.toMillis(), TimeUnit.MILLISECONDS)
-//            .setConstraints(
-//                Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-//            )
-//            .build()
-//        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-//            "daily_sync_work",
-//            ExistingPeriodicWorkPolicy.KEEP,
-//            syncWorkerRequest
-//        )
-        val workRequest = OneTimeWorkRequestBuilder<SyncWorker>().setInitialDelay(10, TimeUnit.SECONDS).build()
-        WorkManager.getInstance(applicationContext).enqueue(workRequest)
     }
 }
 

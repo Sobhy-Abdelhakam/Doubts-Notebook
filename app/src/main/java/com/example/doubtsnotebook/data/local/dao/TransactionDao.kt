@@ -14,6 +14,8 @@ interface TransactionDao {
     suspend fun insert(transaction: TransactionEntity): Long
     @Update
     suspend fun updateTransaction(transaction: TransactionEntity)
+    @Query("SELECT * FROM transactions")
+    suspend fun getAllTransactions(): List<TransactionEntity>
     @Query("SELECT * FROM transactions WHERE customerId = :customerId ORDER BY date DESC")
     fun getTransactionsByCustomer(customerId: Int): Flow<List<TransactionEntity>>
     @Query("SELECT * FROM transactions WHERE isSynced = 0")

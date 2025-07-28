@@ -1,6 +1,7 @@
 [versions]
 agp = "8.9.0-alpha09"
 appcompat = "1.7.1"
+desugar_jdk_libs = "2.1.5"
 firebaseBom = "34.0.0"
 hiltNavigationCompose = "1.2.0"
 kotlin = "2.0.21"
@@ -14,10 +15,16 @@ activityCompose = "1.10.1"
 composeBom = "2025.07.00"
 room_version = "2.7.2"
 hilt_version = "2.56.2"
+workRuntimeKtx = "2.10.2"
+hiltWork = "1.2.0"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
+hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
+androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "lifecycleRuntimeKtx" }
