@@ -37,6 +37,14 @@
     <string name="transaction_type">نوع المعاملة</string>
     <string name="transaction_saved">تم حفظ المعاملة</string>
 
+    <!-- settings-->
+    <string name="settings">الإعدادات</string>
+    <string name="appearance">المظهر</string>
+    <string name="theme">المظهر</string>
+    <string name="app_language">لغة التطبيق</string>
+    <string name="data">البيانات</string>
+    <string name="sync_data">مزامنة البيانات</string>
+
     <!-- Common -->
     <string name="search">بحث</string>
     <string name="back">رجوع</string>

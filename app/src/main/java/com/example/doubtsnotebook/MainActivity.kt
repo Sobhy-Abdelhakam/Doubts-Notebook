@@ -1,28 +1,47 @@
 package com.example.doubtsnotebook
 
+import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
+import androidx.core.os.LocaleListCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.example.doubtsnotebook.domain.model.AppLanguage
+import com.example.doubtsnotebook.domain.model.AppTheme
 import com.example.doubtsnotebook.presentation.auth.AuthScreen
 import com.example.doubtsnotebook.presentation.auth.AuthViewModel
-import com.example.doubtsnotebook.presentation.customers.customerList.CustomerListScreen
 import com.example.doubtsnotebook.presentation.customers.addcustomer.AddCustomerScreen
 import com.example.doubtsnotebook.presentation.customers.addtransaction.AddTransactionScreen
+import com.example.doubtsnotebook.presentation.customers.customerList.CustomerListScreen
 import com.example.doubtsnotebook.presentation.customers.customerdetails.CustomerDetailsScreen
+import com.example.doubtsnotebook.presentation.setting.SettingScreen
+import com.example.doubtsnotebook.sync.SyncWorker
 import com.example.doubtsnotebook.ui.theme.DoubtsNotebookTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            setupSyncWorker()
+//        }
+
+
         enableEdgeToEdge()
         setContent {
             DoubtsNotebookTheme {
@@ -35,9 +54,9 @@ class MainActivity : ComponentActivity() {
                     }
                     composable<CustomerList> {
                         CustomerListScreen(
-                            authViewModel = viewModel,
                             onAddCustomerClick = { navController.navigate(AddCustomer) },
-                            onCustomerClick = { navController.navigate(CustomerDetails(it)) }
+                            onCustomerClick = { navController.navigate(CustomerDetails(it)) },
+                            navigateToSetting = {navController.navigate(Setting)}
                         )
                     }
                     composable<AddCustomer> { AddCustomerScreen(onBack = { navController.popBackStack() }) }
@@ -51,9 +70,67 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable<AddTransaction> { AddTransactionScreen(onBack = { navController.popBackStack() }) }
+
+                    composable<Setting> {
+                        val currentLanguageCode = AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                        val currentLanguage = AppLanguage.entries.find { it.code == currentLanguageCode } ?: AppLanguage.AR
+
+                        val currentTheme = when (AppCompatDelegate.getDefaultNightMode()) {
+                            MODE_NIGHT_NO -> AppTheme.LIGHT
+                            MODE_NIGHT_YES -> AppTheme.DARK
+                            else -> AppTheme.SYSTEM
+                        }
+                        SettingScreen(
+                            currentLanguage = currentLanguage.displayName,
+                            onLanguageChange = { langCode ->
+                                val locales = LocaleListCompat.forLanguageTags(langCode)
+                                AppCompatDelegate.setApplicationLocales(locales)
+                            },
+                            currentTheme = currentTheme,
+                            onThemeChange = { theme ->
+                                val themeCode = when(theme){
+                                    AppTheme.LIGHT -> MODE_NIGHT_NO
+                                    AppTheme.DARK -> MODE_NIGHT_YES
+                                    AppTheme.SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
+                                }
+                                AppCompatDelegate.setDefaultNightMode(themeCode)
+                            },
+                            onBack = {navController.popBackStack()},
+                            logout = {
+                                viewModel.logout()
+                                navController.navigate(Auth) {
+                                    popUpTo(Setting) { inclusive = true }
+                                }
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setupSyncWorker() {
+//        val now = LocalDateTime.now()
+//        val targetTime = now.withHour(2).withMinute(0).withSecond(0)
+//
+//        val delay = Duration.between(now, targetTime)
+//            .takeIf { !it.isNegative }
+//            ?: Duration.between(now, targetTime.plusDays(1)) // If now after 2:00 AM
+//
+//        val syncWorkerRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
+//            .setInitialDelay(delay.toMillis(), TimeUnit.MILLISECONDS)
+//            .setConstraints(
+//                Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+//            )
+//            .build()
+//        WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+//            "daily_sync_work",
+//            ExistingPeriodicWorkPolicy.KEEP,
+//            syncWorkerRequest
+//        )
+        val workRequest = OneTimeWorkRequestBuilder<SyncWorker>().setInitialDelay(10, TimeUnit.SECONDS).build()
+        WorkManager.getInstance(applicationContext).enqueue(workRequest)
     }
 }
 
@@ -68,6 +145,9 @@ data class CustomerDetails(val customerId: Int)
 
 @Serializable
 data class AddTransaction(val customerId: Int)
-// add auth screen in navigation
+
 @Serializable
 object Auth
+
+@Serializable
+object Setting

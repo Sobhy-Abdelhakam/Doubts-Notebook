@@ -35,6 +35,14 @@
     <string name="note">Note</string>
     <string name="transaction_type">Transaction Type</string>
     <string name="transaction_saved">Transaction saved</string>
+    
+    <!-- settings-->
+    <string name="settings">Settings</string>
+    <string name="appearance">Appearance</string>
+    <string name="theme">Theme</string>
+    <string name="app_language">App language</string>
+    <string name="data">Data</string>
+    <string name="sync_data">Sync Data</string>
 
     <!-- Common -->
     <string name="search">Search</string>
