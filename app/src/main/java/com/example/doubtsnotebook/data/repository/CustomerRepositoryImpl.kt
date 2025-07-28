@@ -6,9 +6,8 @@ import com.example.doubtsnotebook.data.mapper.toEntity
 import com.example.doubtsnotebook.domain.model.Customer
 import com.example.doubtsnotebook.domain.repository.CustomerRepository
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class CustomerRepositoryImpl @Inject constructor(private val dao: CustomerDao) :
+class CustomerRepositoryImpl(private val dao: CustomerDao) :
     CustomerRepository {
     override fun getAllCustomers() = dao.getAllCustomers().map { it.map { c -> c.toDomain() } }
 

@@ -31,7 +31,7 @@ class CustomerDetailsViewModel @Inject constructor(
 
     val transactions = repository.getTransactionsByCustomer(customerId).stateIn(
         viewModelScope,
-        SharingStarted.WhileSubscribed(5000), emptyList()
+        SharingStarted.WhileSubscribed(), emptyList()
     )
 
     val balance = transactions.map { list ->
@@ -41,7 +41,7 @@ class CustomerDetailsViewModel @Inject constructor(
                 PAYMENT -> -txn.amount
             }
         }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0.0)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0.0)
 
     init {
         viewModelScope.launch {

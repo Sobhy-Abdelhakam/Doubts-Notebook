@@ -1,4 +1,4 @@
-package com.example.doubtsnotebook.presentation.customers
+package com.example.doubtsnotebook.presentation.customers.customerList
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,5 +13,5 @@ class CustomerViewModel @Inject constructor(private val repository: CustomerRepo
     ViewModel() {
 
     val customers = repository.getAllCustomers()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 }

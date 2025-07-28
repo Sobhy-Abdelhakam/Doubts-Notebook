@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">السوبر ماركت</string>
+    <string name="app_name">ع النوتة</string>
 
     <!-- Authentication-->
     <string name="login">تسجيل دخول</string>

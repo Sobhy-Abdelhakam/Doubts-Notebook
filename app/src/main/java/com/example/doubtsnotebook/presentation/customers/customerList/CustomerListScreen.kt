@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,21 +26,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.doubtsnotebook.R
-import com.example.doubtsnotebook.presentation.auth.AuthViewModel
-import com.example.doubtsnotebook.presentation.customers.CustomerViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomerListScreen(
     viewModel: CustomerViewModel = hiltViewModel(),
-    authViewModel: AuthViewModel,
     onAddCustomerClick: () -> Unit,
-    onCustomerClick: (Int) -> Unit
+    onCustomerClick: (Int) -> Unit,
+    navigateToSetting: () -> Unit,
 ) {
     val customers by viewModel.customers.collectAsState()
     var searchQuery by remember { mutableStateOf("") }
@@ -49,15 +47,18 @@ fun CustomerListScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.customers)) },
                 actions = {
-                    IconButton(onClick = authViewModel::logout) {
-                        Icon(painterResource(R.drawable.logout), contentDescription = "Logout")
+                    IconButton(onClick = navigateToSetting) {
+                        Icon(Icons.Outlined.Settings, contentDescription = stringResource(R.string.settings))
                     }
                 }
             )
-                 },
+        },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddCustomerClick) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = stringResource(R.string.add_customer))
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.add_customer)
+                )
             }
         }
     ) { padding ->
@@ -81,12 +82,14 @@ fun CustomerListScreen(
                     OutlinedTextField(
                         value = searchQuery,
                         onValueChange = { searchQuery = it },
-                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
                         placeholder = {
                             Text(stringResource(R.string.search))
                         },
                         shape = RoundedCornerShape(16.dp)
-                        )
+                    )
                 }
                 items(
                     customers.filter {
