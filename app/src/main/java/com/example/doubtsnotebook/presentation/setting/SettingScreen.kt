@@ -52,6 +52,10 @@ fun SettingScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        viewModel.loadLastBackupTime()
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -82,6 +86,16 @@ fun SettingScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
             Text(stringResource(R.string.data), style = MaterialTheme.typography.titleMedium)
+
+            state.lastBackupAt?.let { time ->
+                Text(
+                    text = stringResource(R.string.last_backup)+time,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    color = Color.Gray
+                )
+            }
+
 
             if (state.isBackingUp) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {

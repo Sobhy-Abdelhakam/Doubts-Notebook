@@ -47,6 +47,7 @@
     <string name="backup_progress">جاري النسخة الاحتياطية…</string>
     <string name="backup_success">تم النسخ الاحتياطي بنجاح</string>
     <string name="backup_failed">فشل النسخ الاحتياطي</string>
+    <string name="last_backup">آخر نسخة احتياطية: </string>
 
     <!-- Common -->
     <string name="search">بحث</string>

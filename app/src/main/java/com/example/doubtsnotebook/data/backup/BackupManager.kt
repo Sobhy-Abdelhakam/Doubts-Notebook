@@ -5,12 +5,14 @@ import com.example.doubtsnotebook.data.local.dao.CustomerDao
 import com.example.doubtsnotebook.data.local.dao.TransactionDao
 import com.example.doubtsnotebook.data.local.entity.CustomerEntity
 import com.example.doubtsnotebook.data.local.entity.TransactionEntity
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.type.DateTime
+import com.google.firebase.firestore.SetOptions
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -28,12 +30,24 @@ class BackupManager(
         val userRef = firestore.collection("backups").document(userId)
         try {
             withContext(Dispatchers.IO) {
+                // Delete old backup
+                deleteCollection(userRef.collection("customers"))
+                deleteCollection(userRef.collection("transactions"))
+                // backup new data
                 backupCustomers(userRef)
                 backupTransactions(userRef)
+                // save last backup time
+                userRef.set(mapOf("lastBackupAt" to FieldValue.serverTimestamp()), SetOptions.merge()).await()
             }
             Log.d("BackupManager", "Backup completed successfully.")
         } catch (e: Exception) {
             Log.e("BackupManager", "Backup failed: ${e.message}", e)
+        }
+    }
+    suspend fun deleteCollection(collection: CollectionReference) {
+        val documents = collection.get().await()
+        for (doc in documents) {
+            doc.reference.delete().await()
         }
     }
     suspend fun restoreBackup() {
@@ -56,6 +70,11 @@ class BackupManager(
         } catch (e: Exception) {
             Log.e("BackupManager", "Restore failed: ${e.message}", e)
         }
+    }
+    suspend fun getLastBackupTime(): Timestamp? {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return null
+        val doc = firestore.collection("backups").document(userId).get().await()
+        return doc.getTimestamp("lastBackupAt")
     }
 
     private suspend fun backupCustomers(userRef: DocumentReference) {

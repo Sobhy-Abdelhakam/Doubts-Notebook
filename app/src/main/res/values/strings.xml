@@ -46,6 +46,7 @@
     <string name="backup_progress">Backup in progress…</string>
     <string name="backup_success">Backup completed successfully</string>
     <string name="backup_failed">Backup failed</string>
+    <string name="last_backup">Last Backup: </string>
 
     <!-- Common -->
     <string name="search">Search</string>
