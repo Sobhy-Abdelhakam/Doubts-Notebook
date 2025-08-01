@@ -7,9 +7,7 @@ import androidx.room.PrimaryKey
 data class CustomerEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val remoteId: String? = null,
-    val name: String,
-    val phone: String?,
-    val notes: String?,
-    val isSynced: Boolean = false
+    val name: String = "",
+    val phone: String? = null,
+    val notes: String? = null,
 )

@@ -20,11 +20,9 @@ import androidx.room.PrimaryKey
 data class TransactionEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val remoteId: String? = null,
-    val customerId: Int,
-    val type: String, // "PURCHASE" or "PAYMENT"
-    val description: String?,
-    val amount: Double,
+    val customerId: Int = 0,
+    val type: String = "PURCHASE", // "PURCHASE" or "PAYMENT"
+    val description: String? = null,
+    val amount: Double = 0.0,
     val date: Long = System.currentTimeMillis(),
-    val isSynced: Boolean = false
 )
