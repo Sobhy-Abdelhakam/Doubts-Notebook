@@ -2,10 +2,9 @@ package com.example.doubtsnotebook.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val warmOliveGreen = Color(0xFF6B8E23)
+val sepia = Color(0xFF4B3F2F)
+val earthyGold = Color(0xFFC2A14D)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val beigeSugarGolden = Color(0xFFFAF3E0)
+val darkGrayBrown = Color(0xFF3A3A3A)
