@@ -43,6 +43,9 @@
     <string name="app_language">App language</string>
     <string name="data">Data</string>
     <string name="sync_data">Sync Data</string>
+    <string name="backup_progress">Backup in progress…</string>
+    <string name="backup_success">Backup completed successfully</string>
+    <string name="backup_failed">Backup failed</string>
 
     <!-- Common -->
     <string name="search">Search</string>

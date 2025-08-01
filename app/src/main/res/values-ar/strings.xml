@@ -44,6 +44,9 @@
     <string name="app_language">لغة التطبيق</string>
     <string name="data">البيانات</string>
     <string name="sync_data">مزامنة البيانات</string>
+    <string name="backup_progress">جاري النسخة الاحتياطية…</string>
+    <string name="backup_success">تم النسخ الاحتياطي بنجاح</string>
+    <string name="backup_failed">فشل النسخ الاحتياطي</string>
 
     <!-- Common -->
     <string name="search">بحث</string>
