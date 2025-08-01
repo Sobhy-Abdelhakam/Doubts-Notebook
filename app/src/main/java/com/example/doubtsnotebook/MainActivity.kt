@@ -22,6 +22,7 @@ import com.example.doubtsnotebook.presentation.customers.addcustomer.AddCustomer
 import com.example.doubtsnotebook.presentation.customers.addtransaction.AddTransactionScreen
 import com.example.doubtsnotebook.presentation.customers.customerList.CustomerListScreen
 import com.example.doubtsnotebook.presentation.customers.customerdetails.CustomerDetailsScreen
+import com.example.doubtsnotebook.presentation.restorebackup.RestoreBackupScreen
 import com.example.doubtsnotebook.presentation.setting.SettingScreen
 import com.example.doubtsnotebook.ui.theme.DoubtsNotebookTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 val startDestination = if (viewModel.getCurrentUserId() != null) CustomerList else Auth
                 NavHost(navController = navController, startDestination = startDestination) {
                     composable<Auth> {
-                        AuthScreen(viewModel) { navController.navigate(CustomerList){popUpTo(Auth){inclusive = true} } }
+                        AuthScreen(viewModel) { navController.navigate(Restore) }
                     }
                     composable<CustomerList> {
                         CustomerListScreen(
@@ -93,6 +94,9 @@ class MainActivity : AppCompatActivity() {
                             }
                         )
                     }
+                    composable<Restore> {
+                        RestoreBackupScreen { navController.navigate(CustomerList){popUpTo(Auth){inclusive = true} } }
+                    }
                 }
             }
         }
@@ -116,3 +120,6 @@ object Auth
 
 @Serializable
 object Setting
+
+@Serializable
+object Restore
