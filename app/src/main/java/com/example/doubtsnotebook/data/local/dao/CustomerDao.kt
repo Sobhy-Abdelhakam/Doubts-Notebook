@@ -27,8 +27,4 @@ interface CustomerDao {
     suspend fun getCustomerById(id: Int): CustomerEntity
     @Query("SELECT * FROM customers WHERE name LIKE '%' || :name || '%'")
     fun getCustomerByName(name: String): Flow<List<CustomerEntity>>
-//    @Query("SELECT * FROM customers WHERE isSynced = 0")
-//    suspend fun getUnsyncedCustomers(): List<CustomerEntity>
-//    @Query("SELECT * FROM customers WHERE remoteId = :remoteId LIMIT 1")
-//    suspend fun getByRemoteId(remoteId: String): CustomerEntity?
 }

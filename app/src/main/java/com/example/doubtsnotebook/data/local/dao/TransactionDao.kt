@@ -22,9 +22,4 @@ interface TransactionDao {
     suspend fun getAllTransactions(): List<TransactionEntity>
     @Query("SELECT * FROM transactions WHERE customerId = :customerId ORDER BY date DESC")
     fun getTransactionsByCustomer(customerId: Int): Flow<List<TransactionEntity>>
-//    @Query("SELECT * FROM transactions WHERE isSynced = 0")
-//    suspend fun getUnsyncedTransactions(): List<TransactionEntity>
-//
-//    @Query("SELECT * FROM transactions WHERE remoteId = :remoteId LIMIT 1")
-//    suspend fun getByRemoteId(remoteId: String): TransactionEntity?
 }
