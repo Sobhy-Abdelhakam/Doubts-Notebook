@@ -32,6 +32,10 @@ import kotlinx.serialization.Serializable
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // set Arabic is default language
+        if (AppCompatDelegate.getApplicationLocales().isEmpty) {
+            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
+        }
         enableEdgeToEdge()
         setContent {
             DoubtsNotebookTheme {

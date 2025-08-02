@@ -21,9 +21,5 @@ class MyApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
         BackupScheduler.scheduleBackup(applicationContext)
-        // set Arabic is default language
-        if (AppCompatDelegate.getApplicationLocales().isEmpty) {
-            AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags("ar"))
-        }
     }
 }
