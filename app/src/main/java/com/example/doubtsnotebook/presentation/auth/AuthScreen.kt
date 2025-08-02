@@ -36,7 +36,8 @@ import com.example.doubtsnotebook.R
 @Composable
 fun AuthScreen(
     viewModel: AuthViewModel = hiltViewModel(),
-    onAuthSuccess: () -> Unit
+    navigateToRestoreBackup: () -> Unit,
+    navigateToCustomerList: () -> Unit
 ) {
     val authState = viewModel.authState
     var selectedTab by remember { mutableIntStateOf(0) }
@@ -111,10 +112,12 @@ fun AuthScreen(
             when (authState) {
                 is AuthState.Loading -> CircularProgressIndicator()
                 is AuthState.Error -> Text(authState.message, color = Color.Red)
-                is AuthState.Success -> {
-                    LaunchedEffect(Unit) { onAuthSuccess() }
+                is AuthState.LoginSuccess -> {
+                    LaunchedEffect(Unit) { navigateToRestoreBackup() }
                 }
-
+                is AuthState.RegisterSuccess -> {
+                    LaunchedEffect(Unit) { navigateToCustomerList() }
+                }
                 else -> {}
             }
         }

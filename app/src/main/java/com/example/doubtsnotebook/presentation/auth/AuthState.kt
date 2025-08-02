@@ -3,6 +3,7 @@ package com.example.doubtsnotebook.presentation.auth
 sealed class AuthState {
     object Idle : AuthState()
     object Loading : AuthState()
-    object Success : AuthState()
+    object LoginSuccess : AuthState()
+    object RegisterSuccess: AuthState()
     data class Error(val message: String) : AuthState()
 }

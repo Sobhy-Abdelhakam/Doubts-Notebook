@@ -37,16 +37,21 @@ class MainActivity : AppCompatActivity() {
             DoubtsNotebookTheme {
                 val navController = rememberNavController()
                 val viewModel: AuthViewModel = hiltViewModel()
-                val startDestination = if (viewModel.getCurrentUserId() != null) CustomerList else Auth
+                val startDestination =
+                    if (viewModel.getCurrentUserId() != null) CustomerList else Auth
                 NavHost(navController = navController, startDestination = startDestination) {
                     composable<Auth> {
-                        AuthScreen(viewModel) { navController.navigate(Restore) }
+                        AuthScreen(
+                            viewModel,
+                            navigateToRestoreBackup = { navController.navigate(Restore) },
+                            navigateToCustomerList = { navController.navigate(CustomerList) }
+                        )
                     }
                     composable<CustomerList> {
                         CustomerListScreen(
                             onAddCustomerClick = { navController.navigate(AddCustomer) },
                             onCustomerClick = { navController.navigate(CustomerDetails(it)) },
-                            navigateToSetting = {navController.navigate(Setting)}
+                            navigateToSetting = { navController.navigate(Setting) }
                         )
                     }
                     composable<AddCustomer> { AddCustomerScreen(onBack = { navController.popBackStack() }) }
@@ -56,14 +61,17 @@ class MainActivity : AppCompatActivity() {
                         CustomerDetailsScreen(
                             customerId = backStackEntry.toRoute<CustomerDetails>().customerId,
                             onAddTransactionClick = { navController.navigate(AddTransaction(it)) },
-                            onBack = {navController.popBackStack()}
+                            onBack = { navController.popBackStack() }
                         )
                     }
                     composable<AddTransaction> { AddTransactionScreen(onBack = { navController.popBackStack() }) }
 
                     composable<Setting> {
-                        val currentLanguageCode = AppCompatDelegate.getApplicationLocales().toLanguageTags()
-                        val currentLanguage = AppLanguage.entries.find { it.code == currentLanguageCode } ?: AppLanguage.AR
+                        val currentLanguageCode =
+                            AppCompatDelegate.getApplicationLocales().toLanguageTags()
+                        val currentLanguage =
+                            AppLanguage.entries.find { it.code == currentLanguageCode }
+                                ?: AppLanguage.AR
 
                         val currentTheme = when (AppCompatDelegate.getDefaultNightMode()) {
                             MODE_NIGHT_NO -> AppTheme.LIGHT
@@ -78,14 +86,14 @@ class MainActivity : AppCompatActivity() {
                             },
                             currentTheme = currentTheme,
                             onThemeChange = { theme ->
-                                val themeCode = when(theme){
+                                val themeCode = when (theme) {
                                     AppTheme.LIGHT -> MODE_NIGHT_NO
                                     AppTheme.DARK -> MODE_NIGHT_YES
                                     AppTheme.SYSTEM -> MODE_NIGHT_FOLLOW_SYSTEM
                                 }
                                 AppCompatDelegate.setDefaultNightMode(themeCode)
                             },
-                            onBack = {navController.popBackStack()},
+                            onBack = { navController.popBackStack() },
                             logout = {
                                 viewModel.logout()
                                 navController.navigate(Auth) {
@@ -95,7 +103,13 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     composable<Restore> {
-                        RestoreBackupScreen { navController.navigate(CustomerList){popUpTo(Auth){inclusive = true} } }
+                        RestoreBackupScreen {
+                            navController.navigate(CustomerList) {
+                                popUpTo(Auth) {
+                                    inclusive = true
+                                }
+                            }
+                        }
                     }
                 }
             }
