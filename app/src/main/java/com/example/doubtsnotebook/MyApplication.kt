@@ -2,8 +2,6 @@ package com.example.doubtsnotebook
 
 import android.app.Application
 import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.os.LocaleListCompat
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.example.doubtsnotebook.worker.BackupScheduler

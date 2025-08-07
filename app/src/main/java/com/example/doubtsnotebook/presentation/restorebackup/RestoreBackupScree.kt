@@ -12,7 +12,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.doubtsnotebook.R
 
 @Composable
 fun RestoreBackupScreen(
@@ -25,16 +27,16 @@ fun RestoreBackupScreen(
         state.showDialog -> {
             AlertDialog(
                 onDismissRequest = { viewModel.skipRestore() },
-                title = { Text("استعادة النسخة الاحتياطية") },
-                text = { Text("هل ترغب في استعادة بياناتك؟") },
+                title = { Text(stringResource(R.string.restore_backup_title)) },
+                text = { Text(stringResource(R.string.restore_backup_subtitle)) },
                 confirmButton = {
                     Button(onClick = { viewModel.restore() }) {
-                        Text("نعم")
+                        Text(stringResource(R.string.yes))
                     }
                 },
                 dismissButton = {
                     Button(onClick = { viewModel.skipRestore() }) {
-                        Text("لا")
+                        Text(stringResource(R.string.no))
                     }
                 }
             )

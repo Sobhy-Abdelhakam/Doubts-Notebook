@@ -48,6 +48,8 @@
     <string name="backup_success">تم النسخ الاحتياطي بنجاح</string>
     <string name="backup_failed">فشل النسخ الاحتياطي</string>
     <string name="last_backup">آخر نسخة احتياطية: </string>
+    <string name="restore_backup_title">استعادة النسخة الاحتياطية</string>
+    <string name="restore_backup_subtitle">هل ترغب في استعادة بياناتك؟</string>
 
     <!-- Common -->
     <string name="search">بحث</string>

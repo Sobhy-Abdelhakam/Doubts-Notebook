@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.doubtsnotebook.data.backup.BackupManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -33,7 +32,7 @@ class SettingViewModel @Inject constructor(
                     )
                 }
                 loadLastBackupTime()
-            } catch (e: Exception){
+            } catch (_: Exception){
                 _uiState.update {
                     it.copy(
                         isBackingUp = false,

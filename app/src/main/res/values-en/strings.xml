@@ -47,6 +47,8 @@
     <string name="backup_success">Backup completed successfully</string>
     <string name="backup_failed">Backup failed</string>
     <string name="last_backup">Last Backup: </string>
+    <string name="restore_backup_title">Restore Backup</string>
+    <string name="restore_backup_subtitle">Do you need to restore your data?</string>
 
     <!-- Common -->
     <string name="search">Search</string>
