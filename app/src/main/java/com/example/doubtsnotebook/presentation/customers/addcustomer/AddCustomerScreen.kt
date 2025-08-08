@@ -1,11 +1,13 @@
 package com.example.doubtsnotebook.presentation.customers.addcustomer
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -93,9 +95,11 @@ fun AddCustomerScreen(
 
             Button(
                 onClick = { viewModel.onEvent(AddCustomerEvent.OnSaveClicked) },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(8.dp)
             ) {
-                Text(stringResource(R.string.save))
+                Text(stringResource(R.string.save), style = MaterialTheme.typography.titleMedium)
             }
         }
     }
