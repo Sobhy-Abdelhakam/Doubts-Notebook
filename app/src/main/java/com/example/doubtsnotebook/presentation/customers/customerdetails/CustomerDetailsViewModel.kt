@@ -4,11 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.example.doubtsnotebook.CustomerDetails
 import com.example.doubtsnotebook.domain.model.Customer
 import com.example.doubtsnotebook.domain.model.TransactionType.*
 import com.example.doubtsnotebook.domain.repository.CustomerRepository
 import com.example.doubtsnotebook.domain.repository.TransactionRepository
+import com.example.doubtsnotebook.presentation.navigation.CustomerDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
