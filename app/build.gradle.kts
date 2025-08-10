@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.doubtsnotebook"
+    namespace = "com.sobhy.debtnotebook"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.doubtsnotebook"
+        applicationId = "com.sobhy.debtnotebook"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

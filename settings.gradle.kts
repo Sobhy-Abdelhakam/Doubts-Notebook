@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Doubts Notebook"
+rootProject.name = "Debt Notebook"
 include(":app")
