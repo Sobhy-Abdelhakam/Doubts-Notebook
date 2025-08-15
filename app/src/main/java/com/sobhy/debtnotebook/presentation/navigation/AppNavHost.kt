@@ -29,7 +29,13 @@ fun AppNavHost() {
             AuthScreen(
                 authViewModel,
                 navigateToRestoreBackup = { navController.navigate(Restore) },
-                navigateToCustomerList = { navController.navigate(CustomerList) }
+                navigateToCustomerList = {
+                    navController.navigate(CustomerList) {
+                        popUpTo(Auth) {
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
         composable<CustomerList> {
